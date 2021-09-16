@@ -10,7 +10,7 @@ cd sg_bot
 python setup.py develop
 ```
 
-Then, make a webhook in your discord server
+Then, make a webhook in your discord server.
 
 **Step 1**
 
@@ -31,7 +31,7 @@ Then, make a webhook in your discord server
 You can set the bot name and image. Check `asset/rtx.png`. Copy the url from this step.
 
 
-Place authentication file in the root directory
+Place authentication file in the root directory.
 ```bash
 cd
 # You are under /home/[username]/.
@@ -41,13 +41,22 @@ cd auth
 # You are under /home/[username]/auth
 vi url.txt
 [Paste your server url]
+
+home
+|-- [username]
+|   |-- auth
+|   |   `-- url.txt
+|   |
+|   `-- ...
+|
+`-- ...
 ```
 
 Call the bot inside your training script!
 ```python
 from speaking_gpu import bot
 
-sg_bot = bot.SpeakingGPU()
+sg_bot = bot.SpeakingGPU(prefix='')
 sg_bot.send('Hello, world!')
 # You can force the notification
 sg_bot.send('Hello, world!', force_notification=True)
