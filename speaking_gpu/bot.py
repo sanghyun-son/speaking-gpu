@@ -6,8 +6,13 @@ import discord
 
 class SpeakingGPU(object):
 
-    def __init__(self, url: typing.Optional[str]=None) -> None:
+    def __init__(
+            self,
+            prefix: typing.Optional[str]=None,
+            url: typing.Optional[str]=None) -> None:
+
         super().__init__()
+        self.prefix = prefix
         if url is None:
             url = path.join('~', 'auth', 'url.txt')
 
@@ -25,11 +30,23 @@ class SpeakingGPU(object):
             url,
             adapter=discord.RequestsWebhookAdapter(),
         )
+        self.buffer = []
+        return
+
+    def _preprocess(self, msg: str) -> str:
+        if self.prefix is not None and self.prefix is not '':
+            msg = f'{self.prefix} {msg}'
+
         return
 
     def send(self, msg: str, force_notification: bool=False) -> None:
         if force_notification:
             msg = '@everyone ' + msg
 
+        msg = self._preprocess(msg)
         self.webhook.send(msg)
+        return
+
+    def accumulate(self, msg: str) -> None:
+        self.buffer.append(msg)
         return
