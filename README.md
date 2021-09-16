@@ -5,7 +5,7 @@
 
 Clone this repository and install it.
 ```bash
-git clone []
+git clone https://github.com/sanghyun-son/speaking-gpu.git
 cd sg_bot
 python setup.py develop
 ```
