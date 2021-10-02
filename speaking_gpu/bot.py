@@ -34,17 +34,23 @@ class SpeakingGPU(object):
         return
 
     def _preprocess(self, msg: str) -> str:
-        if self.prefix is not None and self.prefix is not '':
+        if self.prefix is not None and self.prefix != '':
             msg = f'{self.prefix} {msg}'
 
-        return
+        return msg
 
     def send(self, msg: str, force_notification: bool=False) -> None:
         if force_notification:
             msg = '@everyone ' + msg
 
         msg = self._preprocess(msg)
-        self.webhook.send(msg)
+        try:
+            self.webhook.send(msg)
+        except Exception as e:
+            print(f'Error: {e}')
+        finally:
+            pass
+
         return
 
     def accumulate(self, msg: str) -> None:
